@@ -256,7 +256,7 @@ if __name__ == '__main__':
                 message = message.replace('\n', '\t')
                 user = sc_chat_element.attrib['user']
                 time = float(sc_chat_element.attrib['ts'])
-                duration = sc_chat_element.attrib['time']
+                duration = float(sc_chat_element.attrib['time'])
                 sc_tuple += [(time, price, message, user, duration)]
             except:
                 print(f"superchat processing error {sc_chat_element}")
