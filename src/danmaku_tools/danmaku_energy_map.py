@@ -17,7 +17,6 @@ from scipy.stats import halfnorm
 
 from danmaku_tools.danmaku_tools import read_danmaku_file, get_value, get_time
 
-import bilibili_api
 from textrank4zh import TextRank4Sentence
 from tqdm import tqdm
 
@@ -253,11 +252,11 @@ if __name__ == '__main__':
         for sc_chat_element in sc_chats:
             try:
                 price = sc_chat_element.attrib['price']
-                raw_message = json.loads(sc_chat_element.attrib['raw'])
-                message = raw_message["message"].replace('\n', '\t')
-                user = raw_message["user_info"]['uname']
+                message = sc_chat_element.text if sc_chat_element.text is not None else ""
+                message = message.replace('\n', '\t')
+                user = sc_chat_element.attrib['user']
                 time = float(sc_chat_element.attrib['ts'])
-                duration = raw_message['time']
+                duration = sc_chat_element.attrib['time']
                 sc_tuple += [(time, price, message, user, duration)]
             except:
                 print(f"superchat processing error {sc_chat_element}")
@@ -407,6 +406,7 @@ if __name__ == '__main__':
         tree = ET.parse(args.danmaku)
         user_cache = {}
 
+        import bilibili_api
 
         def get_user_follower(user_id):
             if user_id in user_cache:

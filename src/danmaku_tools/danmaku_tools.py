@@ -3,7 +3,8 @@ import json
 
 
 def read_danmaku_file(file_path, guard=False):
-    tree = ET.parse(file_path)
+    xmlp = ET.XMLParser(encoding="utf-8")
+    tree = ET.parse(file_path, parser=xmlp)
     root = tree.getroot()
 
     all_children = [child for child in root if child.tag in ['gift', 'sc', 'd'] + (['guard'] if guard else [])]
