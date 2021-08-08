@@ -270,7 +270,7 @@ if __name__ == '__main__':
                 sc_text = segment_text(sc_text)
             else:
                 sc_text = "没有醒目留言..."
-            with open(args.sc_list, "w") as file:
+            with open(args.sc_list, "w", encoding='utf8') as file:
                 file.write(sc_text)
         if args.sc_srt is not None:
             active_sc = []
@@ -323,14 +323,14 @@ if __name__ == '__main__':
                 end_time = max([sc[1] for sc in active_sc])
                 _, new_subtitles, _ = flush_sc(start_time=cur_time, end_time=end_time)
                 subtitles += new_subtitles
-            with open(args.sc_srt, "w") as file:
+            with open(args.sc_srt, "w", encoding='utf8') as file:
                 file.write(srt.compose(subtitles))
 
     if args.he_map is not None or args.graph is not None or args.he_time is not None or args.he_range:
         heat_values = get_heat_time(xml_list)
 
         if args.he_range is not None:
-            with open(args.he_range, "w") as file:
+            with open(args.he_range, "w", encoding='utf8') as file:
                 json.dump(heat_values[4], file)
 
         if args.he_map is not None:
@@ -383,7 +383,7 @@ if __name__ == '__main__':
                     text += f"\n {convert_time(start_he_time)} - {convert_time(end_he_time)}\t{heat_comments[i]}"
             text += "\n"
             text = segment_text(text)
-            with open(args.he_map, "w") as file:
+            with open(args.he_map, "w", encoding='utf8') as file:
                 file.write(text)
 
         if args.he_time is not None:
@@ -396,7 +396,7 @@ if __name__ == '__main__':
                 highest_time_id = he_pairs[0][np.argmax(he_pairs[1])]
                 highest_time = all_timestamps[highest_time_id]
                 text = str(highest_time)
-            with open(args.he_time, "w") as file:
+            with open(args.he_time, "w", encoding='utf8') as file:
                 file.write(text)
 
         if args.graph is not None:
